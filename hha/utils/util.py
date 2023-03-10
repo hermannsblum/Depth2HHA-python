@@ -148,6 +148,8 @@ def getRMatrix(yi, yf):
         # find angle of rotation
         phi = np.degrees(np.arccos(np.dot(yi.T, yf)))
 
+    ax = ax.flatten()
+
     if (abs(phi) > 0.1):
         phi = phi * (np.pi / 180)
 
