@@ -4,8 +4,8 @@ import cv2
 import os
 import math
 
-from utils.rgbd_util import *
-from utils.getCameraParam import *
+from hha.utils.rgbd_util import *
+from hha.utils.getCameraParam import *
 
 '''
 must use 'COLOR_BGR2GRAY' here, or you will get a different gray-value with what MATLAB gets.
@@ -31,11 +31,11 @@ def getHHA(C, D, RD):
     angle = np.reshape(angle, h.shape)
 
     '''
-    Must convert nan to 180 as the MATLAB program actually does. 
+    Must convert nan to 180 as the MATLAB program actually does.
     Or we will get a HHA image whose border region is different
     with that of MATLAB program's output.
     '''
-    angle[np.isnan(angle)] = 180        
+    angle[np.isnan(angle)] = 180
 
 
     pc[:,:,2] = np.maximum(pc[:,:,2], 100)
@@ -67,16 +67,16 @@ if __name__ == "__main__":
     hha_complete = getHHA(camera_matrix, D, D)
     cv2.imwrite('demo/hha.png', hha)
     cv2.imwrite('demo/hha_complete.png', hha_complete)
-    
-    
+
+
     ''' multi-peocessing example '''
     '''
     from multiprocessing import Pool
-    
+
     def generate_hha(i):
         # generate hha for the i-th image
         return
-    
+
     processNum = 16
     pool = Pool(processNum)
 
@@ -85,4 +85,4 @@ if __name__ == "__main__":
         pool.apply_async(generate_hha, args=(i,))
         pool.close()
         pool.join()
-    ''' 
+    '''
